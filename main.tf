@@ -7,11 +7,11 @@ resource "aws_transfer_server" "sftp" {
 resource "aws_transfer_user" "write_only" {
   for_each = var.users_write_only
 
-  server_id = aws_transfer_server.sftp.id
-  user_name = each.key
-  role = aws_iam_role.sftp_transfer.arn
+  server_id      = aws_transfer_server.sftp.id
+  user_name      = each.key
+  role           = aws_iam_role.sftp_transfer.arn
   home_directory = "/${aws_s3_bucket.sftp_transfer[0].bucket}/${var.home_dir_prefix}${each.key}"
-  policy = <<POLICY
+  policy         = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -47,11 +47,11 @@ POLICY
 resource "aws_transfer_user" "read_only" {
   for_each = var.users_read_only
 
-  server_id = aws_transfer_server.sftp.id
-  user_name = each.key
-  role = aws_iam_role.sftp_transfer.arn
+  server_id      = aws_transfer_server.sftp.id
+  user_name      = each.key
+  role           = aws_iam_role.sftp_transfer.arn
   home_directory = "/${aws_s3_bucket.sftp_transfer[0].bucket}/${var.home_dir_prefix}${each.key}"
-  policy = <<POLICY
+  policy         = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -87,11 +87,11 @@ POLICY
 resource "aws_transfer_user" "read_write" {
   for_each = var.users_read_write
 
-  server_id = aws_transfer_server.sftp.id
-  user_name = each.key
-  role = aws_iam_role.sftp_transfer.arn
+  server_id      = aws_transfer_server.sftp.id
+  user_name      = each.key
+  role           = aws_iam_role.sftp_transfer.arn
   home_directory = "/${aws_s3_bucket.sftp_transfer[0].bucket}/${var.home_dir_prefix}${each.key}"
-  policy = <<POLICY
+  policy         = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -179,9 +179,9 @@ POLICY
 resource "aws_transfer_ssh_key" "all" {
   for_each = merge(var.users_write_only, var.users_read_only, var.users_read_write)
 
-  server_id = aws_transfer_server.sftp.id
-  user_name = each.key
-  body = each.value
+  server_id  = aws_transfer_server.sftp.id
+  user_name  = each.key
+  body       = each.value
   depends_on = [aws_transfer_user.write_only]
 }
 
@@ -197,7 +197,7 @@ resource "aws_s3_bucket" "sftp_transfer" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        sse_algorithm     = "AES256"
+        sse_algorithm = "AES256"
       }
     }
   }
@@ -223,8 +223,8 @@ resource "aws_s3_bucket_public_access_block" "sftp_transfer" {
 }
 
 resource "aws_s3_bucket" "sftp_transfer_s3_logging" {
-  count  = var.manage_bucket ? 1 : 0
-  bucket = "${var.bucket_name}-s3-logging"
+  count  = var.manage_bucket_logging ? 1 : 0
+  bucket = var.bucket_name_logging
   acl    = "log-delivery-write"
 
   lifecycle_rule {
@@ -245,7 +245,7 @@ resource "aws_s3_bucket" "sftp_transfer_s3_logging" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        sse_algorithm     = "AES256"
+        sse_algorithm = "AES256"
       }
     }
   }

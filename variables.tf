@@ -3,6 +3,11 @@ variable "bucket_name" {
   description = "SFTP Transfer S3 Bucket to transfer to/from"
 }
 
+variable "bucket_name_logging" {
+  type        = string
+  description = "SFTP Transfer S3 Bucket to use for S3 logging the transfer bucket"
+}
+
 variable "custom_dns_domain" {
   description = "If non-empty, domain name for custom DNS alias to sftp endpoint in Route53."
   default     = ""
@@ -23,6 +28,12 @@ variable "home_dir_prefix" {
 variable "manage_bucket" {
   type        = bool
   description = "If true, create/manage the S3 bucket in the module"
+  default     = true
+}
+
+variable "manage_bucket_logging" {
+  type        = bool
+  description = "If true, create/manage the S3 bucket used for logging in the module"
   default     = true
 }
 

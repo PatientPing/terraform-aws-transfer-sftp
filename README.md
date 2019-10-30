@@ -11,6 +11,7 @@ The module also manages users which can be granted read-only, write-only, and re
 | Variable                            | Type        | Description                                                                    | Default      | Required |
 | ----------------------------------- | ----------- |--------------------------------------------------------------------------------| ------------ | -------- |
 | bucket_name                         | string      | SFTP Transfer S3 Bucket to transfer to/from                                    | none         | yes      |
+| bucket_name_logging                 | string      | SFTP Transfer S3 Bucket to transfer to/from                                    | none         | yes      |
 | custom_dns_domain                   | string      | If non-empty, domain name for custom DNS alias to sftp endpoint in Route53     | ""           | no       |
 | custom_dns_hostname                 | string      | Route53 DNS alias hostname                                                     | "sftp"       | no       |
 | home_dir_prefix                     | string      | Home directory prefix in S3 - <bucket_name>/<home_dir_prefix><username>        | "home/"      | no       |
@@ -36,6 +37,7 @@ module "sftp" {
   source = "github.com/PatientPing/terraform-aws-transfer-sftp"
 
   bucket_name               = "sftp-transfer.infra-sandbox.s.patientping.net"
+  bucket_name_logging       = "sftp-transfer-logging.infra-sandbox.s.patientping.net"
   custom_dns_domain         = data.terraform_remote_state.foundation.outputs.dns.name
   s3_object_expiration_days = 30
 
