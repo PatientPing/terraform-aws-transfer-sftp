@@ -191,7 +191,7 @@ resource "aws_s3_bucket" "sftp_transfer" {
 
   logging {
     target_bucket = length(aws_s3_bucket.sftp_transfer_s3_logging) > 0 ? aws_s3_bucket.sftp_transfer_s3_logging[0].id : ""
-    target_prefix = ""
+    target_prefix = var.bucket_prefix_logging
   }
 
   server_side_encryption_configuration {

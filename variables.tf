@@ -8,6 +8,12 @@ variable "bucket_name_logging" {
   description = "SFTP Transfer S3 Bucket to use for S3 logging the transfer bucket"
 }
 
+variable "bucket_prefix_logging" {
+  type        = string
+  description = "SFTP Transfer S3 Bucket prefix use for S3 logging the transfer bucket"
+  default     = ""
+}
+
 variable "custom_dns_domain" {
   description = "If non-empty, domain name for custom DNS alias to sftp endpoint in Route53."
   default     = ""
@@ -19,10 +25,9 @@ variable "custom_dns_hostname" {
 }
 
 variable "home_dir_prefix" {
-  type    = string
+  type        = string
   description = "Prefix for home dir.  Homedirs are <S3bucket>/<home_dir_prefix><username>"
-
-  default = "home/"
+  default     = "home/"
 }
 
 variable "manage_bucket" {
@@ -40,8 +45,7 @@ variable "manage_bucket_logging" {
 variable "s3_object_expiration_days" {
   description = "Number of days to keep objects in SFTP S3 bucket if managed.  No expiration if 0."
   type        = number
-
-  default = null
+  default     = null
 }
 
 variable "tags" {
@@ -52,20 +56,17 @@ variable "tags" {
 variable "users_read_only" {
   type        = map(string)
   description = "Read-Only Users"
-
-  default = {}
+  default     = {}
 }
 
 variable "users_read_write" {
   type        = map(string)
   description = "Read-Write Users"
-
-  default = {}
+  default     = {}
 }
 
 variable "users_write_only" {
-  type = map(string)
+  type        = map(string)
   description = "Write-Only Users"
-
-  default = {}
+  default     = {}
 }
