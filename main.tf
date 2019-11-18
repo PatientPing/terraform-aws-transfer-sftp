@@ -190,8 +190,8 @@ resource "aws_s3_bucket" "sftp_transfer" {
   bucket = var.bucket_name
 
   logging {
-    target_bucket = aws_s3_bucket.sftp_transfer_s3_logging[0].id
-    target_prefix = "/"
+    target_bucket = length(aws_s3_bucket.sftp_transfer_s3_logging) > 0 ? aws_s3_bucket.sftp_transfer_s3_logging[0].id : var.bucket_name_logging
+    target_prefix = var.bucket_prefix_logging
   }
 
   server_side_encryption_configuration {
@@ -255,7 +255,7 @@ resource "aws_s3_bucket" "sftp_transfer_s3_logging" {
 
 resource "aws_s3_bucket_public_access_block" "sftp_transfer_s3_logging" {
   count                   = var.manage_bucket ? 1 : 0
-  bucket                  = aws_s3_bucket.sftp_transfer_s3_logging[0].id
+  bucket                  = length(aws_s3_bucket.sftp_transfer_s3_logging) > 0 ? aws_s3_bucket.sftp_transfer_s3_logging[count.index].id : ""
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -263,8 +263,8 @@ resource "aws_s3_bucket_public_access_block" "sftp_transfer_s3_logging" {
 }
 
 resource "aws_route53_record" "sftp" {
-  count   = length(var.custom_dns_hostname) > 0 ? 1 : 0
-  zone_id = data.aws_route53_zone.custom_dns[0].id
+  count   = length(var.custom_dns_domain) > 0 ? 1 : 0
+  zone_id = data.aws_route53_zone.custom_dns[count.index].id
   name    = "sftp"
   type    = "CNAME"
   ttl     = "5"
