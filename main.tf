@@ -190,7 +190,7 @@ resource "aws_s3_bucket" "sftp_transfer" {
   bucket = var.bucket_name
 
   logging {
-    target_bucket = length(aws_s3_bucket.sftp_transfer_s3_logging) > 0 ? aws_s3_bucket.sftp_transfer_s3_logging[0].id : ""
+    target_bucket = length(aws_s3_bucket.sftp_transfer_s3_logging) > 0 ? aws_s3_bucket.sftp_transfer_s3_logging[0].id : var.bucket_name_logging
     target_prefix = var.bucket_prefix_logging
   }
 
