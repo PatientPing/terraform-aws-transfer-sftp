@@ -320,3 +320,7 @@ resource "aws_iam_role_policy" "sftp_transfer_logging" {
 }
 POLICY
 }
+
+data "aws_cloudwatch_log_group" "sftp" {
+  name = "/aws/transfer/${aws_transfer_server.sftp.id}"
+}

@@ -24,12 +24,13 @@ The module also manages users which can be granted read-only, write-only, and re
 
 ## Output Variables
 
-| Variable                            | Type                | Description                                                             |
-| ----------------------------------- | ------------------- |------------------------------------------------------------------------ |
-| bucket                              | aws_s3_bucket       | SFTP Transfer S3 bucket to transfer to/from                             |
-| bucket_logging                      | aws_s3_bucket       | SFTP Transfer S3 logging bucket                                         |
-| custom_dns_record                   | aws_route53_record  | Custom DNS Route53 record                                               |
-| sftp                                | aws_transfer_server | Transfer Server for SFTP outputs                                        |
+| Variable                            | Type                     | Description                                                             |
+| ----------------------------------- | ------------------------ |------------------------------------------------------------------------ |
+| bucket                              | aws_s3_bucket            | SFTP Transfer S3 bucket to transfer to/from                             |
+| bucket_logging                      | aws_s3_bucket            | SFTP Transfer S3 logging bucket                                         |
+| log_group                           | aws_cloudwatch_log_group | Transfer Server Cloudwatch log group                                    |
+| custom_dns_record                   | aws_route53_record       | Custom DNS Route53 record                                               |
+| sftp                                | aws_transfer_server      | Transfer Server for SFTP outputs                                        |
 
 
 ## Invocation Example
