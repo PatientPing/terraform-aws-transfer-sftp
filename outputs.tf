@@ -9,3 +9,7 @@ output "bucket_logging" {
 output "custom_dns_record" {
   value = length(aws_route53_record.sftp) > 0 ? aws_route53_record.sftp[0] : null
 }
+
+output "sftp" {
+  value = aws_transfer_server.sftp
+}
