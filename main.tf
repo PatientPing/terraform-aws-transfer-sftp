@@ -97,7 +97,8 @@ resource "aws_transfer_user" "read_write" {
   "Statement": [
       {
           "Action": [
-              "s3:ListBucket"
+              "s3:ListBucket",
+              "s3:GetObject",
           ],
           "Effect": "Allow",
           "Resource": [
