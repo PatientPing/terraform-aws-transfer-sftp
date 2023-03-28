@@ -182,7 +182,11 @@ resource "aws_transfer_ssh_key" "all" {
   server_id  = aws_transfer_server.sftp.id
   user_name  = each.key
   body       = each.value
-  depends_on = [aws_transfer_user.write_only]
+  depends_on = [
+                   aws_transfer_user.write_only,
+                   aws_transfer_user.read_only,
+                   aws_transfer_user.read_write,
+               ]
 }
 
 resource "aws_s3_bucket" "sftp_transfer" {
